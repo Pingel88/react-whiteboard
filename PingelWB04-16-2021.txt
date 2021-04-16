@@ -1,0 +1,43 @@
+//Write an algorithm that takes a string with repeated characters and compresses them, using a number to show how many times the repeated character has been compressed. For instance, aaa would be written as 3a. Solve the problem with and without recursion.
+
+const s31 = "aaabccdddda" // "3ab2c4da"
+const s32 = " asdfjssdddadf asd   fsfffkl" // " asdfj2s3dadf asd3 fs3fkl"
+const s33 = "sssssssssssssssssssss" // "21s"
+const s34 = null; // "Invalid input"
+
+//Q3 non-recursive
+function stringCompress(string) {
+  if (typeof string != "string") {
+    return "Invalid input";
+  }
+  let returnString = "";
+  for (let i = 0; i < string.length; i++) {
+    let count = 0;
+    while (string[i] === string[i + count]) {
+      count++;
+    }
+    if (count === 1) {
+      returnString += string[i];
+    } else {
+      returnString += count + string[i];
+    }
+    i += count - 1;
+  }
+  return returnString;
+}
+
+//Q3 recursive
+function stringCompressRecursive(string) {
+  if (string === "") {
+    return "";
+  } else {
+    let count = 0;
+    while(string[0] === string[count]) {
+      count++;
+    }
+    if (count === 1) {
+      return string[0] + stringCompressRecursive(string.substring(1));
+    }
+    return count + string[0] + stringCompressRecursive(string.substring(count));
+  }
+}
